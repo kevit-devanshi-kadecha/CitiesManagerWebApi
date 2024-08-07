@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using CitiesManager.WebApi.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,6 +11,16 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString"));
+});
+
+// used versioning 
+builder.Services.AddApiVersioning(config =>
+{
+    //config.ApiVersionReader = new UrlSegmentApiVersionReader(); // reads the version name from controller route 
+
+    config.ApiVersionReader = new QueryStringApiVersionReader();
+    config.DefaultApiVersion = new ApiVersion(1, 0);
+    config.AssumeDefaultVersionWhenUnspecified = true;  
 });
 
 //Swagger 

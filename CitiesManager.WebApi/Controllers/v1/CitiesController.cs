@@ -7,12 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CitiesManager.WebApi.Entities;
 using CitiesManager.WebApi.Models;
+using Asp.Versioning;
 
-namespace CitiesManager.WebApi.Controllers
+namespace CitiesManager.WebApi.Controllers.v1
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class CitiesController : ControllerBase
+    [ApiVersion("1.0")]
+    public class CitiesController : CustomControllerBase
     {
         private readonly ApplicationDbContext _context;
 
@@ -45,7 +45,7 @@ namespace CitiesManager.WebApi.Controllers
         // PUT: api/Cities/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCity(Guid id,[Bind(nameof(city.Id),nameof(city.CityName))] City city)
+        public async Task<IActionResult> PutCity(Guid id, [Bind(nameof(city.Id), nameof(city.CityName))] City city)
         {
             if (id != city.Id)
             {
